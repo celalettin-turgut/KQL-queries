@@ -1,0 +1,10 @@
+// Suspicious Email Forwarding Rule
+OfficeActivity  
+| where RecordType == "ExchangeAdmin" 
+| where Operation == "New-InboxRule" 
+| mv-apply ForwardTo = todynamic(Parameters) on (where ForwardTo.Name == "ForwardTo" | extend ForwardToAddress = ForwardTo.Value)
+| mv-apply ForwardFrom = todynamic(Parameters) on (where ForwardFrom.Name == "From" | extend ForwardFromEmailAddress = ForwardFrom.Value)
+| mv-apply DeleteMessage = todynamic(Parameters) on (where DeleteMessage.Name == "DeleteMessage" | extend DeleteMessageFromInboxAfterForwarding = DeleteMessage.Value)
+| mv-apply Name = todynamic(Parameters) on (where Name.Name == "Name" | extend RuleName = Name.Value)
+| where ForwardToAddress !has "companydomain.com" 
+//| project TimeGenerated, Operation, UserId, ClientIP,ForwardFromEmailAddress, ForwardToAddress,DeleteMessageFromInboxAfterForwarding, RuleName, ResultStatus, Parameters
