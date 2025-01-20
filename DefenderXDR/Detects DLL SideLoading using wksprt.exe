@@ -1,0 +1,13 @@
+DeviceImageLoadEvents 
+| where (InitiatingProcessFolderPath endswith @'\wksprt.exe' and FolderPath endswith "iphlpapi.dll") 
+//| where  not (InitiatingProcessFolderPath startswith @'C:\Windows\System32\') // This is original rule sample. Active this line if you get so many false posivitives.
+//description: Detects DLL SideLoading using wksprt.exe
+//tags:
+//    - attack.defense_evasion
+//    - attack.t1574.001
+//    - attack.t1574.002
+//references:
+//    - https://cyble.com/blog/sliver-implant-targets-german-entities-with-dll-sideloading-and-proxying-techniques/
+// SigmaHQ - https://github.com/CRIL-Threat-Intelligence/Sigma_rules/blob/main/Detects_DLL_SideLoading_using_wksprt.exe.txt
+//falsepositives:
+//    - Unknown
