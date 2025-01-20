@@ -1,1 +1,13 @@
+https://cyble.com/blog/sliver-implant-targets-german-entities-with-dll-sideloading-and-proxying-techniques/
 
+DeviceProcessEvents
+| where ((InitiatingProcessFolderPath endswith @"\cmd.exe" or InitiatingProcessVersionInfoOriginalFileName =~ "Cmd.exe") and (FolderPath endswith @"\wksprt.exe"))
+//| where  not (InitiatingProcessFolderPath startswith @'C:\Windows\System32\') // This is original rule sample. Activate this line if you get so many false posivitives.
+//description: Detects DLL SideLoading using wksprt.exe
+//tags:
+//    - attack.execution
+//    - attack.t1059.003
+//references:
+//    - https://cyble.com/blog/sliver-implant-targets-german-entities-with-dll-sideloading-and-proxying-techniques/
+//falsepositives:
+//    - Unknown
